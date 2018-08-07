@@ -18,7 +18,7 @@
 				v-model="currentValue"
 				:toggle="true"
 			/>
-			<field-error v-if="error" :id="describedByErrorId" :message="error" />
+			<field-error v-if="errors.length" :id="describedByErrorId" :messages="errors" />
 		</div>
 		<div v-if="description"
 			class="pkpFormField__description"

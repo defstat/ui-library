@@ -28,7 +28,7 @@
 				:aria-invalid="!!error"
 				:required="isRequired"
 			></textarea>
-			<field-error v-if="error" :id="describedByErrorId" :message="error" />
+			<field-error v-if="errors.length" :id="describedByErrorId" :messages="errors" />
 		</div>
 	</div>
 </template>

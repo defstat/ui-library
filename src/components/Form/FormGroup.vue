@@ -12,7 +12,7 @@
 							<component
 								:is="field.component"
 								v-bind="field"
-								:error="errors[field.name] && errors[field.name][locale.key] || null"
+								:errors="errors[field.name] && errors[field.name][locale.key] || []"
 								:localeKey="locale.key"
 								:formId="formId"
 								:locales="availableLocales"
@@ -26,7 +26,7 @@
 					<component
 						:is="field.component"
 						v-bind="field"
-						:error="errors[field.name] || null"
+						:errors="errors[field.name] || []"
 						:formId="formId"
 						:i18n="i18n"
 						@change="fieldChanged"

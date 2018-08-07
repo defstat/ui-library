@@ -1,7 +1,9 @@
 <template>
 	<div class="pkpFieldError">
-		<icon icon="exclamation-triangle" :inline="true" />
-		<span v-html="message" />
+		<div v-for="message in messages" class="pkpFieldError__message">
+			<icon icon="exclamation-triangle" :inline="true" />
+			<span v-html="message" />
+		</div>
 	</div>
 </template>
 
@@ -14,7 +16,7 @@ export default {
 		Icon,
 	},
 	props: {
-		message: String,
+		messages: Array,
 	},
 };
 </script>

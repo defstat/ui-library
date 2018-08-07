@@ -34,7 +34,7 @@
 				:i18n="i18n"
 			/>
 		</div>
-		<field-error v-if="error" :id="describedByErrorId" :message="error" />
+		<field-error v-if="errors.length" :id="describedByErrorId" :messages="errors" />
 	</div>
 </template>
 

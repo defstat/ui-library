@@ -21,7 +21,7 @@
 			v-html="description"
 			:id="describedByDescriptionId"
 		/>
-		<field-error v-if="error" :id="describedByErrorId" :message="error" />
+		<field-error v-if="errors.length" :id="describedByErrorId" :messages="errors" />
 		<div class="pkpFormField__control">
 			<label v-for="option in localizedOptions" class="pkpFormField--options__option">
 				<input

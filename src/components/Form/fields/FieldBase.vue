@@ -31,7 +31,7 @@ export default {
 		value: {
 			required: true,
 		},
-		error: String,
+		errors: Array,
 		i18n: Object,
 	},
 	computed: {
