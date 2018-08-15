@@ -361,8 +361,8 @@ export default {
 		 * @return string
 		 */
 		currentStageLabel: function () {
-			if (this.item.status.id === 3 || this.item.status.id === 4) {
-				return this.item.status.label;
+			if (this.item.status === 3 || this.item.status === 4) {
+				return this.item.statusLabel;
 			} else if (this.item.submissionProgress > 0) {
 				return this.i18n.incomplete;
 			}
