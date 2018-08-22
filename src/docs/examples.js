@@ -2,7 +2,7 @@ import ViewBadge from './examples/Badge/ViewBadge.vue';
 import BadgeRaw from '!!raw-loader!@/components/Badge/Badge.vue';
 import ViewButton from './examples/Button/ViewButton.vue';
 import ButtonRaw from '!!raw-loader!@/components/Button/Button.vue';
-import Form from '@/components/Form/Form.vue';
+import ViewForm from './examples/Form/ViewForm.vue';
 import FormRaw from '!!raw-loader!@/components/Form/Form.vue';
 import ViewHelpButton from './examples/HelpButton/ViewHelpButton.vue';
 import HelpButtonRaw from '!!raw-loader!@/components/HelpButton/HelpButton.vue';
@@ -16,6 +16,8 @@ import ViewMultilingualProgress from './examples/MultilingualProgress/ViewMultil
 import MultilingualProgressRaw from '!!raw-loader!@/components/MultilingualProgress/MultilingualProgress.vue';
 import SelectListPanel from '@/components/SelectListPanel/SelectListPanel.vue';
 import SelectListPanelRaw from '!!raw-loader!@/components/SelectListPanel/SelectListPanel.vue';
+import ViewTab from './examples/Tab/ViewTab.vue';
+import TabRaw from '!!raw-loader!./examples/Tab/ViewTab.vue';
 import ViewTooltip from './examples/Tooltip/ViewTooltip.vue';
 import TooltipRaw from '!!raw-loader!@/components/Tooltip/Tooltip.vue';
 
@@ -33,7 +35,7 @@ export default {
 		url: '/components/Button',
 	},
 	Form: {
-		component: Form,
+		component: ViewForm,
 		componentRaw: FormRaw,
 		label: 'Form',
 		url: '/components/Form',
@@ -73,6 +75,12 @@ export default {
 		componentRaw: SelectListPanelRaw,
 		label: 'SelectListPanel',
 		url: '/components/SelectListPanel',
+	},
+	Tab: {
+		component: ViewTab,
+		componentRaw: TabRaw,
+		label: 'Tab',
+		url: '/components/Tab',
 	},
 	Tooltip: {
 		component: ViewTooltip,

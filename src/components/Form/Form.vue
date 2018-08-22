@@ -54,26 +54,33 @@ import PkpButton from '@/components/Button/Button.vue';
 import Icon from '@/components/Icon/Icon.vue';
 
 export default {
-	name: 'Form',
+	name: 'PkpForm',
 	components: {
 		FormLocales,
 		FormPage,
 		PkpButton,
 		Icon,
 	},
+	props: {
+		id: String,
+		method: String,
+		action: String,
+		errors: {
+			type: Object,
+			default: function () {
+				return {};
+			},
+		},
+		fields: Array,
+		groups: Array,
+		pages: Array,
+		activeLocales: Array,
+		i18n: Object,
+	},
 	data: function () {
 		return {
-			id: '',
-			method: '',
-			action: '',
-			errors: {},
-			fields: [],
-			groups: [],
-			pages: [],
-			activeLocales: [],
 			currentPage: '',
 			isSaving: false,
-			i18n: {},
 		};
 	},
 	computed: {
@@ -192,7 +199,8 @@ export default {
 		 */
 		onSuccess: function (r) {
 			pkp.eventBus.$emit('notify', {text: this.__('successMessage', r), type: 'success'});
-			pkp.eventBus.$emit('formSuccess', {formId: this.id, response: r});
+			pkp.eventBus.$emit('form-success', this.id, r);
+			this.$emit('form-success', this.id, r);
 		},
 
 		/**
@@ -203,7 +211,7 @@ export default {
 		 */
 		onError: function (r) {
 			pkp.eventBus.$emit('notify', {text: this.__('errors', {count: Object.keys(r.responseJSON).length}), type: 'error'});
-			this.errors = r.responseJSON;
+			this.$emit('set-errors', this.id, r.responseJSON);
 		},
 
 		/**
@@ -270,7 +278,7 @@ export default {
 		 * @param array locales New array of active locales
 		 */
 		setActiveLocales: function (locales) {
-			this.activeLocales = locales;
+			this.$emit('set-active-locales', this.id, locales);
 		},
 
 		/**
@@ -341,14 +349,14 @@ export default {
 					delete newErrors[name];
 				}
 			}
-			this.errors = newErrors;
+			this.$emit('set-errors', this.id, newErrors);
 		},
 	},
 	mounted: function () {
 
 		// Set the current locale
 		if (!this.activeLocales.length) {
-			this.activeLocales = [$.pkp.app.primaryLocale];
+			this.setActiveLocales([$.pkp.app.primaryLocale]);
 		}
 
 		// Set the current page

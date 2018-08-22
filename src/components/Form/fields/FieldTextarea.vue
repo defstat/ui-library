@@ -25,7 +25,7 @@
 				:id="controlId"
 				:name="localizedName"
 				:aria-describedby="describedByIds"
-				:aria-invalid="!!error"
+				:aria-invalid="!!errors.length"
 				:required="isRequired"
 			></textarea>
 			<field-error v-if="errors.length" :id="describedByErrorId" :messages="errors" />

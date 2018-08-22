@@ -30,7 +30,7 @@
 					:value="option.value"
 					:type="type"
 					:aria-describedby="describedByIds"
-					:aria-invalid="!!error"
+					:aria-invalid="!!errors.length"
 					:disabled="option.disabled"
 				/>
 				{{ option.label }}

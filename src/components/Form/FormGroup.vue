@@ -99,7 +99,7 @@ export default {
 
 .pkpFormGroup {
 	position: relative;
-	padding: @double @base;
+	padding: @double;
 	border: none;
 
 	+ .pkpFormGroup {

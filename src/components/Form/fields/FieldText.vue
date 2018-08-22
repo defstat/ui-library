@@ -22,7 +22,7 @@
 				:id="controlId"
 				:name="localizedName"
 				:aria-describedby="describedByIds"
-				:aria-invalid="!!error"
+				:aria-invalid="!!errors.length"
 				:required="isRequired"
 				:style="inputStyles"
 			/>

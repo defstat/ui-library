@@ -20,7 +20,7 @@
 				:id="controlId"
 				:name="localizedName"
 				:aria-describedby="describedByIds"
-				:aria-invalid="!!error"
+				:aria-invalid="!!errors.length"
 				:required="isRequired"
 			>
 				<option v-for="option in localizedOptions" v-bind="option">{{ option.label }}</option>

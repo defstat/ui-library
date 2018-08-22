@@ -1,10 +1,8 @@
 import FormUser from './implementations/helpers/form-user';
 
 export default {
-	baseData: function () {
-		return {
-			...FormUser,
-		};
+	data: {
+		...FormUser,
 	},
 	dataDesc: {
 		id: 'Used internally. Do not modify.',

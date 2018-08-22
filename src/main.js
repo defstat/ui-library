@@ -10,11 +10,13 @@ import Vue from 'vue';
 import GlobalMixins from '@/mixins/global.js';
 import VTooltip from 'v-tooltip';
 import VueScrollTo from 'vue-scrollto';
+import Tabs from 'vue-tabs-component';
 import App from '@/docs/App';
 import router from '@/docs/router';
 
 Vue.use(VTooltip, {defaultTrigger: 'click'});
 Vue.use(VueScrollTo);
+Vue.use(Tabs);
 Vue.mixin(GlobalMixins);
 
 Vue.config.productionTip = false;
