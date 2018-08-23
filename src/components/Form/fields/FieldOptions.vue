@@ -63,7 +63,7 @@ export default {
 			required: true,
 		},
 		value: {
-			type: [Array, String],
+			type: [Array, Boolean],
 			required: true,
 		},
 	},

@@ -77,7 +77,7 @@ export default {
 		 * @return array
 		 */
 		groupsInPage: function () {
-			return this.groups.filter(group => group.pageId === this.id);
+			return this.groups.filter(group => group.pageId === this.id && this.shouldShowGroup(group));
 		},
 	},
 	watch: {
@@ -133,6 +133,27 @@ export default {
 		 */
 		showLocale: function (localeKey) {
 			this.$emit('showLocale', localeKey);
+		},
+
+		/**
+		 * Should a group be shown?
+		 *
+		 * @param object group One of this.groups
+		 * @return boolean
+		 */
+		shouldShowGroup: function (group) {
+			if (typeof group.showWhen === 'undefined') {
+				return true;
+			}
+			const whenFieldName = typeof group.showWhen === 'string' ? group.showWhen : group.showWhen[0];
+			const whenField = this.fields.find(field => field.name === whenFieldName);
+			if (!whenField) {
+				return false;
+			}
+			if (typeof group.showWhen === 'string') {
+				return !!whenField.value;
+			}
+			return whenField.value === group.showWhen[1];
 		},
 	},
 };

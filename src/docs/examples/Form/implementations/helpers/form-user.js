@@ -5,6 +5,8 @@ import GroupPreferences from './group-preferences';
 import GroupProfile from './group-profile';
 import FieldPasswordNew from './field-password-new';
 import FieldOptionsUserLocales from './field-options-user-locales';
+import FieldOptionsConfirmation from './field-options-confirmation.js';
+import FieldOptionsEmails from './field-options-emails.js';
 import FieldRichTextareaBio from './field-rich-textarea-bio';
 import FieldTextAffiliation from './field-text-affiliation';
 import FieldTextareaMailingAddress from './field-textarea-mailing-address';
@@ -30,6 +32,8 @@ export default {
 		FieldSelectCountry,
 		FieldTextareaMailingAddress,
 		FieldOptionsUserLocales,
+		FieldOptionsConfirmation,
+		FieldOptionsEmails,
 		FieldTextUrl,
 		FieldRichTextareaBio,
 		FieldTextOrcid,

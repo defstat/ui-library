@@ -65,6 +65,7 @@ export default {
 		formId: String,
 		activeLocales: Array,
 		availableLocales: Array,
+		showWhen: [String, Array],
 		i18n: Object,
 	},
 	computed: {
@@ -74,7 +75,7 @@ export default {
 		 * @return array
 		 */
 		fieldsInGroup: function () {
-			return this.fields.filter(field => field.groupId === this.id);
+			return this.fields.filter(field => field.groupId === this.id && this.shouldShowField(field));
 		},
 	},
 	methods: {
@@ -89,6 +90,27 @@ export default {
 		 */
 		fieldChanged: function (data) {
 			this.$emit('change', data);
+		},
+
+		/**
+		 * Should a field be shown?
+		 *
+		 * @param object field One of this.fields
+		 * @return boolean
+		 */
+		shouldShowField: function (field) {
+			if (typeof field.showWhen === 'undefined') {
+				return true;
+			}
+			const whenFieldName = typeof field.showWhen === 'string' ? field.showWhen : field.showWhen[0];
+			const whenField = this.fields.find(field => field.name === whenFieldName);
+			if (!whenField) {
+				return false;
+			}
+			if (typeof field.showWhen === 'string') {
+				return !!whenField.value;
+			}
+			return whenField.value === field.showWhen[1];
 		},
 	},
 };
