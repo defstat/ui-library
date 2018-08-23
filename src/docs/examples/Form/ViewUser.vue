@@ -1,7 +1,7 @@
 <template>
 	<div>
 		<pkp-form
-			v-bind="forms.test"
+			v-bind="forms.user"
 			@setErrors="setFormErrors"
 			@setActiveLocales="setFormActiveLocales"
 		/>
@@ -10,7 +10,7 @@
 
 <script>
 import PkpForm from '@/components/Form/Form.vue';
-import FormTest from './implementations/helpers/form-test';
+import FormUser from './implementations/helpers/form-user';
 
 export default {
 	name: 'ViewForm',
@@ -20,7 +20,7 @@ export default {
 	data: function () {
 		return {
 			forms: {
-				[FormTest.id]: FormTest,
+				[FormUser.id]: FormUser,
 			},
 		};
 	},

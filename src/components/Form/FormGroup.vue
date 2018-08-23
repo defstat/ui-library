@@ -38,6 +38,7 @@
 </template>
 
 <script>
+import FieldHtml from '@/components/Form/fields/FieldHtml.vue';
 import FieldPassword from '@/components/Form/fields/FieldPassword.vue';
 import FieldOptions from '@/components/Form/fields/FieldOptions.vue';
 import FieldRichTextarea from '@/components/Form/fields/FieldRichTextarea.vue';
@@ -48,6 +49,7 @@ import FieldTextarea from '@/components/Form/fields/FieldTextarea.vue';
 export default {
 	name: 'FormGroup',
 	components: {
+		FieldHtml,
 		FieldPassword,
 		FieldOptions,
 		FieldRichTextarea,

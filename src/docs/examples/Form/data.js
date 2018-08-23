@@ -1,4 +1,6 @@
+import FormRaw from '!!raw-loader!@/components/Form/Form.vue';
 import FormUser from './implementations/helpers/form-user';
+import ViewUser from './ViewUser.vue';
 
 export default {
 	data: {
@@ -15,5 +17,12 @@ export default {
 		activeLocales: 'The locale(s) the form is currently being presented in.',
 		currentPage: 'Contains the page ID of the currently active page. If empty, it will be set to the first page when mounted.',
 		isSaving: 'Tracks whether a save operation is in progress.',
+	},
+	examples: {
+		'user': {
+			label: 'User Profile',
+			component: ViewUser,
+			componentRaw: FormRaw,
+		},
 	},
 };
