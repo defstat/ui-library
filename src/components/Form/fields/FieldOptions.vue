@@ -33,7 +33,7 @@
 					:aria-invalid="!!errors.length"
 					:disabled="option.disabled"
 				/>
-				{{ option.label }}
+				<span v-html="option.label" />
 			</label>
 			<multilingual-progress v-if="isMultilingual"
 				:id="multilingualProgressId"

@@ -235,14 +235,13 @@ export default {
 // Should be used for any text input and select fields to ensure consistency
 .pkpFormField__input {
 	display: block;
+	padding: 0 1em;
 	height: 2.5rem; // browser-compatibility for select fields
 	background-color: @lift;
-	padding: 0 0.5em;
 	font-size: @font-sml;
 	line-height: 2.5rem;
 	border: @bg-border;
 	border-radius: 2px;
-	padding: 0 1em;
 }
 
 .pkpFormField__input:hover {

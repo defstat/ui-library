@@ -41,8 +41,10 @@
 import FieldHtml from '@/components/Form/fields/FieldHtml.vue';
 import FieldPassword from '@/components/Form/fields/FieldPassword.vue';
 import FieldOptions from '@/components/Form/fields/FieldOptions.vue';
+import FieldRadioInput from '@/components/Form/fields/FieldRadioInput.vue';
 import FieldRichTextarea from '@/components/Form/fields/FieldRichTextarea.vue';
 import FieldSelect from '@/components/Form/fields/FieldSelect.vue';
+import FieldShowEnsuringLink from '@/components/Form/fields/FieldShowEnsuringLink.vue';
 import FieldText from '@/components/Form/fields/FieldText.vue';
 import FieldTextarea from '@/components/Form/fields/FieldTextarea.vue';
 
@@ -52,8 +54,10 @@ export default {
 		FieldHtml,
 		FieldPassword,
 		FieldOptions,
+		FieldRadioInput,
 		FieldRichTextarea,
 		FieldSelect,
+		FieldShowEnsuringLink,
 		FieldText,
 		FieldTextarea,
 	},
