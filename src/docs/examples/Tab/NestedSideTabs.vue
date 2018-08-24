@@ -6,7 +6,7 @@
 					<tab name="Tab A">
 						Tab A content
 					</tab>
-					<tab name="Tab B">
+					<tab name="Tab B With the Long Name">
 						Tab B content
 					</tab>
 					<tab name="Tab C">
