@@ -4,13 +4,13 @@
 			<tab name="First tab">
 				<tabs :options="{ useUrlFragment: false }">
 					<tab name="Tab A">
-						Tab A content
+						Tab A Content
 					</tab>
 					<tab name="Tab B">
-						Tab A content
+						Tab B content
 					</tab>
 					<tab name="Tab C">
-						Tab A content
+						Tab C content
 					</tab>
 				</tabs>
 			</tab>
@@ -26,6 +26,6 @@
 
 <script>
 export default {
-	name: 'ViewTab',
+	name: 'NestedTabs',
 };
 </script>

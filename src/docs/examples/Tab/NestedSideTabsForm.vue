@@ -4,10 +4,10 @@
 			<tab name="First tab">
 				<tabs :options="{ useUrlFragment: false }" class="tabs-component--side">
 					<tab name="Tab A">
-						Tab A content
+						<pkp-form v-bind="form" />
 					</tab>
 					<tab name="Tab B">
-						Tab B content
+						<pkp-form v-bind="form" />
 					</tab>
 					<tab name="Tab C">
 						Tab C content
@@ -25,7 +25,18 @@
 </template>
 
 <script>
+import PkpForm from '@/components/Form/Form';
+import FormTest from '@/docs/examples/Form/implementations/helpers/form-test';
+
 export default {
-	name: 'NestedSideTabs',
+	name: 'NestedSideTabsForm',
+	components: {
+		PkpForm,
+	},
+	data: function () {
+		return {
+			form: FormTest,
+		};
+	},
 };
 </script>

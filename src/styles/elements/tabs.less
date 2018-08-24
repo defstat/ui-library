@@ -93,6 +93,7 @@
 	.tabs-component .tabs-component {
 		margin-left: -@double;
 		margin-right: -@double;
+		margin-bottom: -@double;
 
 		.tabs-component-panel {
 			border: none;
@@ -167,6 +168,25 @@
 	.tabs-component .tabs-component--side .tabs-component-panel {
 		padding-top: 0;
 		border-top: none;
+
+		.pkpForm {
+			margin-top: 0;
+			border-top: @bg-border-light;
+			margin-left: -@double - 1; // overlap border
+			border-left: @bg-border-light;
+		}
+
+		// Fix off-by-one errors with the locale and side tab border lines
+		&:nth-child(2) {
+
+			.pkpFormLocales {
+				padding-bottom: 1px;
+			}
+
+			.pkpFormPages {
+				margin-top: -1px;
+			}
+		}
 	}
 
 	/* Forms in tabs */

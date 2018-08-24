@@ -2,15 +2,15 @@
 	<div>
 		<tabs>
 			<tab name="First tab">
-				<tabs :options="{ useUrlFragment: false }" class="tabs-component--side">
+				<tabs :options="{ useUrlFragment: false }">
 					<tab name="Tab A">
-						Tab A content
+						<pkp-form v-bind="form" />
 					</tab>
 					<tab name="Tab B">
-						Tab B content
+						Tab A content
 					</tab>
 					<tab name="Tab C">
-						Tab C content
+						Tab A content
 					</tab>
 				</tabs>
 			</tab>
@@ -25,7 +25,18 @@
 </template>
 
 <script>
+import PkpForm from '@/components/Form/Form';
+import FormUser from '@/docs/examples/Form/implementations/helpers/form-user';
+
 export default {
-	name: 'NestedSideTabs',
+	name: 'NestedTabsForm',
+	components: {
+		PkpForm,
+	},
+	data: function () {
+		return {
+			form: FormUser,
+		};
+	},
 };
 </script>
