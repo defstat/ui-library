@@ -9,4 +9,10 @@ export default {
 	help: 'Help',
 	multilingualLabel: '{$label} in {$localeName}',
 	multilingualProgress: '{$count}/{$total} languages completed',
+	thumbnailDescription: 'Preview of the currently selected image.',
+	altTextLabel: 'Alternate Text',
+	altTextDescription: 'Describe this image for visitors viewing the site in a text-only browser or with assistive devices. Example: "Our editor speaking at the PKP conference."',
+	uploadFile: 'Upload File',
+	remove: 'Remove',
+	restore: 'Restore Original',
 };

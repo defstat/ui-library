@@ -32,10 +32,17 @@ export default {
 		value: {
 			required: true,
 		},
-		errors: Array,
+		allErrors: Object,
 		i18n: Object,
 	},
 	computed: {
+		/**
+		 * A getter and setter for modifying the value. Instead of changing
+		 * this.value = foo, which bypasses Vue's observers, set
+		 * this.currentValue = foo. The change event will be emitted so that the
+		 * value can be changed by parent components, and observers can react to the
+		 * change.
+		 */
 		currentValue: {
 			get: function () {
 				return this.isMultilingual ? this.value[this.localeKey] : this.value;
@@ -48,6 +55,23 @@ export default {
 				});
 			},
 		},
+
+		/**
+		 *
+		 */
+		errors: function () {
+			if (!Object.keys(this.allErrors).includes(this.name)) {
+				return [];
+			}
+			let errors = this.allErrors[this.name];
+			if (this.isMultilingual && Object.keys(errors).includes(this.localeKey)) {
+				return errors[this.localeKey];
+			} else if (!this.isMultilingual) {
+				return errors;
+			}
+			return [];
+		},
+
 		/**
 		 * A localized field name
 		 *

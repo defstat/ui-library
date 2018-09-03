@@ -10,6 +10,7 @@
 			:formId="formId"
 			:i18n="i18n"
 			@change="fieldChanged"
+			@set-errors="setErrors"
 		/>
 		<div class="pkpFormPage__footer" ref="footer" aria-live="polite">
 			<form-errors
@@ -154,6 +155,15 @@ export default {
 				return !!whenField.value;
 			}
 			return whenField.value === group.showWhen[1];
+		},
+
+		/**
+		 * Pass an event up to the form to set the errors object
+		 *
+		 * @param object errors The new errors object
+		 */
+		setErrors: function (errors) {
+			this.$emit('set-errors', errors);
 		},
 	},
 };

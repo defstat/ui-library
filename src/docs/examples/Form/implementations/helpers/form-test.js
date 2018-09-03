@@ -3,6 +3,8 @@ import GroupIdentity from './group-identity';
 import FieldHtmlLorem from './field-html-lorem';
 import FieldRadioInput from './field-radio-input';
 import FieldShowEnsuringLink from './field-show-ensuring-link';
+import FieldUploadCss from './field-upload-css.js';
+import FieldUploadImageLogo from './field-upload-image-logo.js';
 import FieldTextAffiliation from './field-text-affiliation';
 import FieldTextFamilyName from './field-text-family-name';
 import FieldTextGivenName from './field-text-given-name';
@@ -18,6 +20,8 @@ export default {
 		FieldHtmlLorem,
 		FieldRadioInput,
 		FieldShowEnsuringLink,
+		FieldUploadCss,
+		FieldUploadImageLogo,
 	],
 	groups: [
 		{...GroupIdentity, pageId: 'account'},

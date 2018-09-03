@@ -68,6 +68,7 @@ export default {
 .multilingualProgress {
 	display: inline-block;
 	line-height: @line-sml;
+	vertical-align: middle;
 
 	button {
 		border: none;

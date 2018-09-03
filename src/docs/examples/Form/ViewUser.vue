@@ -2,8 +2,8 @@
 	<div>
 		<pkp-form
 			v-bind="forms.user"
-			@setErrors="setFormErrors"
-			@setActiveLocales="setFormActiveLocales"
+			@set-errors="setFormErrors"
+			@set-active-locales="setFormActiveLocales"
 		/>
 	</div>
 </template>

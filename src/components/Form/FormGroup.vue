@@ -8,16 +8,17 @@
 			<template v-for="field in fieldsInGroup">
 				<template v-if="field.isMultilingual">
 					<div class="pkpFormGroup__localeGroup -pkpClearfix">
-						<div v-for="locale in availableLocales" class="pkpFormGroup__locale" :class="{'pkpFormGroup__locale--isActive': activeLocales.includes(locale.key)}">
+						<div v-for="locale in availableLocales" :key="locale.key" class="pkpFormGroup__locale" :class="{'pkpFormGroup__locale--isActive': activeLocales.includes(locale.key)}">
 							<component
 								:is="field.component"
 								v-bind="field"
-								:errors="errors[field.name] && errors[field.name][locale.key] || []"
+								:allErrors="errors"
 								:localeKey="locale.key"
 								:formId="formId"
 								:locales="availableLocales"
 								:i18n="i18n"
 								@change="fieldChanged"
+								@set-errors="setFieldErrors"
 							></component>
 						</div>
 					</div>
@@ -26,10 +27,11 @@
 					<component
 						:is="field.component"
 						v-bind="field"
-						:errors="errors[field.name] || []"
+						:allErrors="errors"
 						:formId="formId"
 						:i18n="i18n"
 						@change="fieldChanged"
+						@set-errors="setFieldErrors"
 					></component>
 				</template>
 			</template>
@@ -47,6 +49,8 @@ import FieldSelect from '@/components/Form/fields/FieldSelect.vue';
 import FieldShowEnsuringLink from '@/components/Form/fields/FieldShowEnsuringLink.vue';
 import FieldText from '@/components/Form/fields/FieldText.vue';
 import FieldTextarea from '@/components/Form/fields/FieldTextarea.vue';
+import FieldUpload from '@/components/Form/fields/FieldUpload.vue';
+import FieldUploadImage from '@/components/Form/fields/FieldUploadImage.vue';
 
 export default {
 	name: 'FormGroup',
@@ -60,6 +64,8 @@ export default {
 		FieldShowEnsuringLink,
 		FieldText,
 		FieldTextarea,
+		FieldUpload,
+		FieldUploadImage,
 	},
 	props: {
 		id: String,
@@ -82,6 +88,15 @@ export default {
 		 */
 		fieldsInGroup: function () {
 			return this.fields.filter(field => field.groupId === this.id && this.shouldShowField(field));
+		},
+
+		hasErrors: function () {
+			for (var fieldName in this.fieldsInGroup) {
+				if (fieldName in this.errors) {
+					return true;
+				}
+			}
+			return false;
 		},
 	},
 	methods: {
@@ -117,6 +132,33 @@ export default {
 				return !!whenField.value;
 			}
 			return whenField.value === field.showWhen[1];
+		},
+
+		/**
+		 * Respond to a field changing its errors
+		 *
+		 * @param string fieldName Field name
+		 * @param arrayy fieldErrors New errors array for that field
+		 * @param string localeKey The locale for a multilingual field
+		 */
+		setFieldErrors: function (fieldName, fieldErrors, localeKey) {
+			let newErrors = {...this.errors};
+			if (!fieldErrors.length) {
+				if (localeKey && newErrors[fieldName] && newErrors[fieldName][localeKey]) {
+					delete newErrors[fieldName][localeKey];
+				} else if (newErrors[fieldName]) {
+					delete newErrors[fieldName];
+				}
+			} else {
+				if (localeKey) {
+					newErrors[fieldName] = newErrors[fieldName] || {};
+					newErrors[fieldName][localeKey] = fieldErrors;
+				} else {
+					newErrors[fieldName] = fieldErrors;
+				}
+			}
+			this.$emit('set-errors', newErrors);
+			// this.$nextTick(() => { this.$forceUpdate(); });
 		},
 	},
 };

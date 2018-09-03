@@ -12,7 +12,7 @@ export default {
 		 * Show the requested message in a modal when the link in the messgae is
 		 * clicked.
 		 */
-		$('.pkpFormField__control button', this.$el).click(() => {
+		$('.pkpFormField--options__option button', this.$el).click(() => {
 			const modalOptions = {
 				modalHandler: '$.pkp.controllers.modal.ConfirmationModalHandler',
 				title: '',
@@ -40,7 +40,7 @@ export default {
 <style lang="less">
 @import '../../../styles/_import';
 
-.pkpFormField__control button {
+.pkpFormField--options__option button {
 	display: inline;
 	padding: 0;
 	border: none;

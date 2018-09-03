@@ -42,6 +42,7 @@
 				@previousPage="setCurrentPage(false)"
 				@showField="showField"
 				@showLocale="showLocale"
+				@set-errors="setErrors"
 			/>
 		</div>
 	</form>
@@ -350,6 +351,15 @@ export default {
 				}
 			}
 			this.$emit('set-errors', this.id, newErrors);
+		},
+
+		/**
+		 * Emit an event to set a new errors array
+		 *
+		 * @param array errors The new list of errors
+		 */
+		setErrors: function (errors) {
+			this.$emit('set-errors', this.id, errors);
 		},
 	},
 	mounted: function () {
