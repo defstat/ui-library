@@ -316,7 +316,6 @@ export default {
 		 */
 		setErrors: function (errors) {
 			this.$emit('set-errors', this.name, errors, this.localeKey);
-			// this.$nextTick(() => { this.$forceUpdate(); });
 		},
 
 		/**

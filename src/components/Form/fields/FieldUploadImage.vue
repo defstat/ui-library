@@ -137,7 +137,7 @@ export default {
 			if (this.uploadFile) {
 				return this.uploadFile.dataURL;
 			} else if (this.currentValue && this.currentValue.uploadName) {
-				return this.baseUrl + this.currentValue.uploadName;
+				return this.baseUrl + '/' + this.currentValue.uploadName;
 			}
 			return '';
 		},
@@ -170,12 +170,11 @@ export default {
 		 * @see https://www.dropzonejs.com/#event-success
 		 */
 		onSuccess: function (file, response) {
-			console.log('onSuccess', file, response);
 			this.isUploading = false;
 			this.$emit('change', {
 				name: this.name,
 				value: {
-					name: response,
+					temporaryFileId: response,
 					altText: '',
 				},
 				localeKey: this.localeKey,
