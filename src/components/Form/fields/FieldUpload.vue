@@ -68,7 +68,7 @@
 						:id="dropzoneClickableId"
 						:label="i18n.uploadFile"
 					/>
-					<pkp-button	v-if="!currentValue && uploadFile && initialValue"
+					<pkp-button v-if="!currentValue && initialValue && !isInitialValue"
 						class="pkpFormField--upload__restore"
 						:label="i18n.restore"
 						@click="revert"
@@ -113,7 +113,7 @@ export default {
 		 * @return boolean
 		 */
 		isInitialValue: function () {
-			return this.currentValue == this.initialValue;
+			return !!this.currentValue && !!this.initialValue && this.currentValue === this.initialValue;
 		},
 
 		/**
