@@ -244,7 +244,7 @@ export default {
 		onSuccess: function (file, response) {
 			this.$emit('change', {
 				name: this.name,
-				value: response,
+				value: response.id,
 				localeKey: this.localeKey,
 			});
 			this.setFocusToControl();

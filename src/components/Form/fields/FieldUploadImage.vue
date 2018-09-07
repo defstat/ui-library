@@ -178,7 +178,7 @@ export default {
 			this.$emit('change', {
 				name: this.name,
 				value: {
-					temporaryFileId: response,
+					temporaryFileId: response.id,
 					altText: '',
 				},
 				localeKey: this.localeKey,
