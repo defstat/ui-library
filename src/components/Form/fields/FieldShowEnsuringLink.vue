@@ -7,6 +7,16 @@ export default {
 	props: {
 		message: String,
 	},
+	computed: {
+		/**
+		 * Get classes for the wrapper element
+		 *
+		 * @return array
+		 */
+		classes: function () {
+			return ['pkpFormField--showEnsuringLink'];
+		},
+	},
 	mounted: function () {
 		/**
 		 * Show the requested message in a modal when the link in the messgae is
@@ -34,13 +44,19 @@ export default {
 			return false;
 		});
 	},
+	beforeDestroy: function () {
+		/**
+		 * Clean up modal event listener
+		 */
+		$('.pkpFormField--options__option button', this.$el).off();
+	},
 };
 </script>
 
 <style lang="less">
 @import '../../../styles/_import';
 
-.pkpFormField--options__option button {
+.pkpFormField--showEnsuringLink .pkpFormField--options__option button {
 	display: inline;
 	padding: 0;
 	border: none;
