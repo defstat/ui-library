@@ -10,5 +10,4 @@ export default {
 	},
 	baseImageUrl: 'http://localhost/ojs/public/journals/1/',
 	value: 'style.css',
-	groupId: 'identity',
 };

@@ -23,18 +23,27 @@
 		/>
 		<field-error v-if="errors.length" :id="describedByErrorId" :messages="errors" />
 		<div class="pkpFormField__control">
-			<label v-for="option in localizedOptions" class="pkpFormField--options__option">
-				<input
-					class="pkpFormField--options__input"
-					v-model="selectedValue"
-					:value="option.value"
-					:type="type"
-					:aria-describedby="describedByIds"
-					:aria-invalid="!!errors.length"
-					:disabled="option.disabled"
-				/>
-				<span v-html="option.label" />
-			</label>
+			<draggable v-model="localizedOptions" @end="updateValueOrder" :options="{disabled: !isOrderable}">
+				<label v-for="option in localizedOptions" :key="option.value" class="pkpFormField--options__option">
+					<input
+						class="pkpFormField--options__input"
+						v-model="selectedValue"
+						:value="option.value"
+						:type="type"
+						:aria-describedby="describedByIds"
+						:aria-invalid="!!errors.length"
+						:disabled="option.disabled"
+					/>
+					<span class="pkpFormField--options__optionLabel" v-html="option.label" />
+					<orderer v-if="isOrderable"
+						@up="optionOrderUp"
+						@down="optionOrderDown"
+						:itemId="option.value"
+						:itemTitle="option.label"
+						:i18n="i18n"
+					/>
+				</label>
+			</draggable>
 			<multilingual-progress v-if="isMultilingual"
 				:id="multilingualProgressId"
 				:count="multilingualFieldsCompleted"
@@ -47,16 +56,26 @@
 
 <script>
 import FieldBase from './FieldBase.vue';
+import draggable from 'vuedraggable';
+import Orderer from '@/components/Orderer/Orderer.vue';
 
 export default {
 	name: 'FieldOptions',
 	extends: FieldBase,
+	components: {
+		draggable,
+		Orderer,
+	},
 	props: {
 		type: {
 			validator: function (value) {
 				return ['checkbox', 'radio'].includes(value);
 			},
 			default: 'checkbox',
+		},
+		isOrderable: {
+			type: Boolean,
+			default: false,
 		},
 		options: {
 			type: Array,
@@ -69,6 +88,11 @@ export default {
 	},
 	data: function () {
 		return {
+			/**
+			 *
+			 */
+			localizedOptions: this.isMultingual ? this.options[this.localeKey] : this.options,
+
 			/**
 			 * This replaces the computed `currentValue` property in FieldBase. We
 			 * use a custom watcher for checkboxes so that all change events are
@@ -86,34 +110,82 @@ export default {
 		 * @return array
 		 */
 		classes: function () {
-			return ['pkpFormField--' + this.type];
+			let classes = [];
+			if (this.isOrderable) {
+				classes.push('pkpFormField--optionsOrderable');
+			}
+			return classes;
+		},
+	},
+	methods: {
+		/**
+		 * Move an option up in the list
+		 *
+		 * @param optionValue int The value of the option to move up
+		 */
+		optionOrderUp: function (optionValue) {
+			const index = this.localizedOptions.findIndex(option => {
+				return option.value === optionValue;
+			});
+			if (!index) {
+				return;
+			}
+			this.localizedOptions.splice(index - 1, 0, this.localizedOptions.splice(index, 1)[0]);
+			this.updateValueOrder();
 		},
 
 		/**
-		 * Get localized set of options
+		 * Move an option down in the list
 		 *
-		 * @return array
+		 * @param optionValue int The value of the option to move down
 		 */
-		localizedOptions: function () {
-			return this.isMultingual ? this.options[this.localeKey] : this.options;
+		optionOrderDown: function (optionValue) {
+			const index = this.localizedOptions.findIndex(option => {
+				return option.value === optionValue;
+			});
+			if (index < 0 || index >= this.localizedOptions.length - 1) {
+				return;
+			}
+			this.localizedOptions.splice(index + 1, 0, this.localizedOptions.splice(index, 1)[0]);
+			this.updateValueOrder();
+		},
+
+		/**
+		 * Update the order of selected values when the order of options is changed
+		 */
+		updateValueOrder: function () {
+			this.selectedValue = this.localizedOptions
+				.filter(option => this.selectedValue.includes(option.value))
+				.map(option => option.value);
 		},
 	},
-	mounted: function () {
-
+	watch: {
 		/**
 		 * Whenever the current value changes, emit an event to update the value of
 		 * this field in the form component.
 		 */
-		this.$watch('selectedValue', function (newVal, oldVal) {
+		selectedValue: function (newVal, oldVal) {
 			if (newVal === oldVal) {
 				return;
+			}
+			if (this.isOrderable) {
+				newVal = this.localizedOptions
+					.filter(option => newVal.includes(option.value))
+					.map(option => option.value);
 			}
 			this.$emit('change', {
 				name: this.name,
 				value: newVal,
 				localeKey: this.localeKey,
 			});
-		});
+		},
+
+		/**
+		 * Whenever the options change, override the localized options with them
+		 */
+		options: function (newVal, oldVal) {
+			this.localizedOptions = this.isMultingual ? this.options[this.localeKey] : this.options;
+		},
 	},
 };
 </script>
@@ -164,6 +236,23 @@ export default {
 
 	&:before {
 		display: none;
+	}
+}
+
+// Adjust when options can be ordered
+.pkpFormField--optionsOrderable {
+
+	.pkpFormField--options__option {
+		position: relative;
+		padding: 0.5em 0.5em 0.5em 6em;
+		border: @bg-border-light;
+	}
+
+	.pkpFormField--options__input {
+		position: absolute;
+		top: 1.5em;
+		left: 4em;
+		transform: translateY(-50%);
 	}
 }
 </style>

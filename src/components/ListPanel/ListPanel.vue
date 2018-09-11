@@ -190,83 +190,32 @@ export default {
 
 		/**
 		 * Move an item up in the list
+		 *
+		 * @param id int The id of the item to move
 		 */
-		itemOrderUp: function (data) {
+		itemOrderUp: function (id) {
 			var index = this.items.findIndex(item => {
-				return item.id == data.id;
+				return item.id == id;
 			});
 			if (index === 0) {
 				return;
 			}
 			this.items.splice(index - 1, 0, this.items.splice(index, 1)[0]);
-			this.itemOrderResetFocus(data.id, 'up');
 		},
 
 		/**
 		 * Move an item down in the list
+		 *
+		 * @param id int The id of the item to move
 		 */
-		itemOrderDown: function (data) {
+		itemOrderDown: function (id) {
 			var index = this.items.findIndex(item => {
-				return item.id == data.id;
+				return item.id == id;
 			});
 			if (index === this.items.length - 1) {
 				return;
 			}
 			this.items.splice(index + 1, 0, this.items.splice(index, 1)[0]);
-			this.itemOrderResetFocus(data.id, 'down');
-		},
-
-		/**
-		 * Move focus to up/down button for item that was just moved
-		 *
-		 * When using the up/down arrows, the focus stays on the button in
-		 * the position which was clicked. This function ensures the focus
-		 * travels with the item that's been moved.
-		 *
-		 * For the same reason, we have to do a manual look up on the child
-		 * component by id. Vue.js's optimization code swaps out the items
-		 * without resetting the components, so any callback is fired on the
-		 * item which is in the position of the item that was just moved. In
-		 * other words, under-the-hood Vue.js moves the data around but leaves
-		 * the components in place, so we have to manually find the component
-		 * where the moved item is and set focus there.
-		 *
-		 * @param itemId int The id of the item to set focus in
-		 * @param direction string Set focus on the 'up' or 'down' btn
-		 */
-		itemOrderResetFocus: function (itemId, direction) {
-
-			// Wait until the components have been redrawn before setting focus
-			this.$nextTick(function () {
-				var itemChild;
-				for (var child of this.$children) {
-					// If the list items are nested inside a draggable,
-					// search in that component's children.
-					if (child.$options._componentTag === 'draggable') {
-						var listItem = child.$children.filter(item => {
-							return item.id === itemId;
-						});
-						if (!listItem.length) {
-							return false;
-						} else {
-							listItem = listItem[0];
-						}
-						for (itemChild of listItem.$children) {
-							if (itemChild.$options._componentTag === 'list-panel-item-orderer') {
-								itemChild.setFocus(direction);
-							}
-						}
-						return false;
-					} else if (child.id === itemId) {
-						for (itemChild of child.$children) {
-							if (itemChild.$options._componentTag === 'list-panel-item-orderer') {
-								itemChild.setFocus(direction);
-							}
-						}
-						return false;
-					}
-				}
-			});
 		},
 
 		/**

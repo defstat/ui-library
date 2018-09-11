@@ -9,5 +9,4 @@ export default {
 		},
 	],
 	message: '<p>Hello this is a message.</p><ul><li>One</li><li>Two</li></ul>',
-	groupId: 'identity',
 };

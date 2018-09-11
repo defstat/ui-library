@@ -15,4 +15,6 @@ export default {
 	uploadFile: 'Upload File',
 	remove: 'Remove',
 	restore: 'Restore Original',
+	orderUp: 'Increase position of {$itemTitle}',
+	orderDown: 'Decrease position of {$itemTitle}',
 };

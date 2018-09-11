@@ -1,11 +1,7 @@
 import FormRaw from '!!raw-loader!@/components/Form/Form.vue';
-import FormUser from './implementations/helpers/form-user';
 import ViewUser from './ViewUser.vue';
 
 export default {
-	data: {
-		...FormUser,
-	},
 	dataDesc: {
 		id: 'Used internally. Do not modify.',
 		method: 'The method to use when submitting the form. This should match the API endpoint that will handle the form. It can be `POST` (create) or `PUT` (edit).',

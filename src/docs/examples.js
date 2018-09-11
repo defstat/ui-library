@@ -14,6 +14,8 @@ import ListPanel from '@/components/ListPanel/ListPanel.vue';
 import ListPanelRaw from '!!raw-loader!@/components/ListPanel/ListPanel.vue';
 import ViewMultilingualProgress from './examples/MultilingualProgress/ViewMultilingualProgress.vue';
 import MultilingualProgressRaw from '!!raw-loader!@/components/MultilingualProgress/MultilingualProgress.vue';
+import ViewOrderer from './/examples/Orderer/ViewOrderer.vue';
+import OrdererRaw from '!!raw-loader!@/components/Orderer/Orderer.vue';
 import SelectListPanel from '@/components/SelectListPanel/SelectListPanel.vue';
 import SelectListPanelRaw from '!!raw-loader!@/components/SelectListPanel/SelectListPanel.vue';
 import ViewTab from './examples/Tab/ViewTab.vue';
@@ -69,6 +71,12 @@ export default {
 		componentRaw: MultilingualProgressRaw,
 		label: 'MultilingualProgress',
 		url: '/components/MultilingualProgress',
+	},
+	Orderer: {
+		component: ViewOrderer,
+		componentRaw: OrdererRaw,
+		label: 'Orderer',
+		url: '/components/Orderer',
 	},
 	SelectListPanel: {
 		component: SelectListPanel,

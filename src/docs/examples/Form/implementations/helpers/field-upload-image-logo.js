@@ -27,6 +27,4 @@ export default {
 			altText: 'This is my alt text stuff.',
 		},
 	},
-	// value: null,
-	groupId: 'identity',
 };

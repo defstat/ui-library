@@ -17,5 +17,4 @@ export default {
 			isInput: true,
 		},
 	],
-	groupId: 'identity',
 };
