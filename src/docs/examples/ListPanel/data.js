@@ -19,6 +19,8 @@ import OMPSubmissionsListPanel from './implementations/OMPExampleSubmissionsList
 import SubmissionsListPanelRaw from '!!raw-loader!@/components/ListPanel/submissions/SubmissionsListPanel.vue';
 import CatalogSubmissionsListPanel from './implementations/ExampleCatalogSubmissionsListPanel.vue';
 import CatalogSubmissionsListPanelRaw from '!!raw-loader!@/components/ListPanel/submissions/CatalogSubmissionsListPanel.vue';
+import AnnouncementsListPanel from './implementations/ExampleAnnouncementsListPanel.vue';
+import AnnouncementsListPanelRaw from '!!raw-loader!@/components/ListPanel/announcements/AnnouncementsListPanel.vue';
 
 export default {
 	baseData: function () {
@@ -129,6 +131,11 @@ export default {
 			label: 'CatalogSubmissionsListPanel (OMP)',
 			component: CatalogSubmissionsListPanel,
 			componentRaw: CatalogSubmissionsListPanelRaw,
+		},
+		'AnnouncementsListPanel': {
+			label: 'AnnouncementsListPanel',
+			component: AnnouncementsListPanel,
+			componentRaw: AnnouncementsListPanelRaw,
 		},
 	},
 };
