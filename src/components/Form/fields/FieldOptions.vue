@@ -82,7 +82,7 @@ export default {
 			required: true,
 		},
 		value: {
-			type: [Array, Boolean],
+			type: [Array, String, Boolean],
 			required: true,
 		},
 	},
@@ -161,7 +161,7 @@ export default {
 	},
 	watch: {
 		/**
-		 * Whenever the current value changes, emit an event to update the value of
+		 * Whenever the selected value changes, emit an event to update the value of
 		 * this field in the form component.
 		 */
 		selectedValue: function (newVal, oldVal) {
@@ -178,6 +178,16 @@ export default {
 				value: newVal,
 				localeKey: this.localeKey,
 			});
+		},
+
+		/**
+		 * Whenever the value prop changes, override the selectedValue
+		 */
+		value: function (newVal, oldVal) {
+			if (newVal === oldVal) {
+				return;
+			}
+			this.selectedValue = newVal;
 		},
 
 		/**

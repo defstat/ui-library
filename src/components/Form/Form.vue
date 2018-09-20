@@ -38,7 +38,7 @@
 				:isSaving="isSaving"
 				:i18n="i18n"
 				@change="fieldChanged"
-				@pageSubmitted="submitPage"
+				@pageSubmitted="nextPage"
 				@previousPage="setCurrentPage(false)"
 				@showField="showField"
 				@showLocale="showLocale"
@@ -150,12 +150,12 @@ export default {
 	},
 	methods: {
 		/**
-		 * Submit a page in the form
+		 * Move to the next page or submit form if we're at the last page
 		 */
-		submitPage: function (pageId) {
+		nextPage: function (pageId) {
 			const pageIndex = this.pages.findIndex(page => page.id === pageId);
 			if (this.pages.length === 1 || pageIndex === (this.pages.length - 1)) {
-				this.submitForm();
+				this.submit();
 				return;
 			}
 			this.setCurrentPage(true);
@@ -164,9 +164,9 @@ export default {
 		/**
 		 * Submit the form
 		 */
-		submitForm: function () {
+		submit: function () {
 
-			this.onSubmit();
+			this.isSaving = true;
 
 			let values = {};
 			this.fields.forEach((field) => {
@@ -178,18 +178,10 @@ export default {
 				method: this.method,
 				url: this.action,
 				data: values,
-				success: this.onSuccess,
-				error: this.onError,
-				complete: this.onComplete,
+				success: this.success,
+				error: this.error,
+				complete: this.complete,
 			});
-		},
-
-		/**
-		 * This method is fired when the form is submitted, before the AJAX request
-		 * is sent.
-		 */
-		onSubmit: function () {
-			this.isSaving = true;
 		},
 
 		/**
@@ -198,10 +190,21 @@ export default {
 		 *
 		 * @param object r The response to the AJAX request
 		 */
-		onSuccess: function (r) {
+		success: function (r) {
 			pkp.eventBus.$emit('notify', {text: this.__('successMessage', r), type: 'success'});
 			pkp.eventBus.$emit('form-success', this.id, r);
-			this.$emit('form-success', this.id, r);
+
+			// Update form values with the response values
+			const newFields = this.fields.map(field => {
+				if (typeof r[field.name] !== 'undefined') {
+					field.value = r[field.name];
+				}
+				return field;
+			});
+			this.$emit('set-fields', this.id, newFields);
+			this.$scrollTo(this.$el, 500, {
+				offset: -50,
+			});
 		},
 
 		/**
@@ -210,7 +213,7 @@ export default {
 		 *
 		 * @param object r The response to the AJAX request
 		 */
-		onError: function (r) {
+		error: function (r) {
 			pkp.eventBus.$emit('notify', {text: this.__('errors', {count: Object.keys(r.responseJSON).length}), type: 'error'});
 			this.$emit('set-errors', this.id, r.responseJSON);
 		},
@@ -221,7 +224,7 @@ export default {
 		 *
 		 * @param object r The response to the AJAX request
 		 */
-		onComplete: function (r) {
+		complete: function (r) {
 			this.isSaving = false;
 		},
 
@@ -235,7 +238,7 @@ export default {
 		 * }}
 		 */
 		fieldChanged: function (data) {
-			this.fields.forEach((field) => {
+			const newFields = this.fields.map((field) => {
 				if (field.name === data.name) {
 					if (data.localeKey) {
 						field.value[data.localeKey] = data.value;
@@ -243,7 +246,9 @@ export default {
 						field.value = data.value;
 					}
 				}
+				return field;
 			});
+			this.$emit('set-fields', this.id, newFields);
 			this.removeError(data.name, data.localeKey);
 		},
 

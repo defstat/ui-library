@@ -54,9 +54,9 @@
 					:id="dropzoneId"
 					:options="dropzoneOptions"
 					@vdropzone-file-added="onAddFile"
-					@vdropzone-success="onSuccess"
-					@vdropzone-canceled="onComplete"
-					@vdropzone-error="onError"
+					@vdropzone-success="success"
+					@vdropzone-canceled="complete"
+					@vdropzone-error="error"
 					@vdropzone-removed-file="onRemoveFile"
 				/>
 				<field-error v-if="!currentValue && errors.length" :id="describedByErrorId" :messages="errors" />
@@ -241,7 +241,7 @@ export default {
 		 * @param object response The server response
 		 * @see https://www.dropzonejs.com/#event-success
 		 */
-		onSuccess: function (file, response) {
+		success: function (file, response) {
 			this.$emit('change', {
 				name: this.name,
 				value: response.id,
@@ -256,7 +256,7 @@ export default {
 		 * @param object file Details about the file
 		 * @see https://www.dropzonejs.com/#event-complete
 		 */
-		onComplete: function (file) {
+		complete: function (file) {
 			this.setFocusToControl();
 		},
 
@@ -296,7 +296,7 @@ export default {
 		 * @param xhr XmlHttpRequest The ajax request
 		 * @see https://www.dropzonejs.com/#event-error
 		 */
-		onError: function (file, message, xhr) {
+		error: function (file, message, xhr) {
 			let errors = this.errors.slice();
 			if (typeof message === 'string') {
 				errors.push(message);

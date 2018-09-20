@@ -1,10 +1,12 @@
 <script type="text/javascript">
 import PkpForm from '@/components/Form/Form.vue';
+import ThemeForm from '@/components/Form/theme/ThemeForm.vue';
 
 export default {
 	name: 'Container',
 	components: {
 		PkpForm,
+		ThemeForm,
 	},
 	data: function () {
 		return {};
@@ -21,24 +23,16 @@ export default {
 		},
 
 		/**
-		 * Respond to a successful form submission
+		 * Update the fields in a form
 		 *
 		 * @param string formId
-		 * @param mixed r The response from the server. This will typically be a
-		 *  representation of the object that was added/modified by the form.
+		 * @param array newFields The list of fields to update the form with
 		 */
-		onFormSuccess: function (formId, r) {
+		setFormFields: function (formId, newFields) {
 			if (!this.forms[formId]) {
 				return;
 			}
-			// Update form values with the response values
-			this.forms[formId].fields.map(field => {
-				if (typeof r[field.name] !== 'undefined') {
-					field.value = r[field.name];
-				}
-				return field;
-			});
-			this.scrollTo();
+			this.forms[formId].fields = newFields;
 		},
 
 		/**
@@ -63,15 +57,6 @@ export default {
 			if (this.getForm(formId)) {
 				this.getForm(formId).activeLocales = activeLocales;
 			}
-		},
-
-		/**
-		 * Scroll to the top
-		 */
-		scrollTo: function () {
-			this.$scrollTo(this.$el, 500, {
-				offset: -50,
-			});
 		},
 	},
 };

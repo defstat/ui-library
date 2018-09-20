@@ -72,9 +72,9 @@
 					:options="dropzoneOptions"
 					@vdropzone-file-added="onAddFile"
 					@vdropzone-thumbnail="onThumbnail"
-					@vdropzone-success="onSuccess"
-					@vdropzone-canceled="onComplete"
-					@vdropzone-error="onError"
+					@vdropzone-success="success"
+					@vdropzone-canceled="complete"
+					@vdropzone-error="error"
 					@vdropzone-removed-file="onRemoveFile"
 				/>
 				<field-error v-if="errors.length" :id="describedByErrorId" :messages="errors" />
@@ -173,7 +173,7 @@ export default {
 		 * @param object response The server response
 		 * @see https://www.dropzonejs.com/#event-success
 		 */
-		onSuccess: function (file, response) {
+		success: function (file, response) {
 			this.isUploading = false;
 			this.$emit('change', {
 				name: this.name,
