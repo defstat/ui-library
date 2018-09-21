@@ -9,7 +9,7 @@
 				<li>
 					<pkp-button
 						element="a"
-						:href="addUrl"
+						@click="openNewForm"
 						:label="i18n.add"
 					/>
 				</li>
@@ -69,6 +69,34 @@ export default {
 	},
 	data: function () {
 		return {};
+		},
+	methods: {
+		/**
+		 * Load a modal displaying history and notes of a submission
+		 */
+		openNewForm: function () {
+
+			var opts = {
+				title: 'New',
+				titleIcon: 'modal_edit',
+				canClose: '1',
+				width: '710',
+				closeButtonText: 'Close Panel',
+				url: this.addUrl,
+				closeCallback: this.resetFocusEdit,
+			};
+
+			$('<div id="' + $.pkp.classes.Helper.uuid() + '" ' +
+					'class="pkp_modal pkpModalWrapper" tabindex="-1"></div>')
+				.pkpHandler('$.pkp.controllers.modal.AjaxModalHandler', opts);
+		},
+	},
+	mounted: function() {
+		var self = this;
+
+		pkp.eventBus.$on('announcementAdded', function (data) {
+			self.get();
+		});
 	},
 };
 </script>

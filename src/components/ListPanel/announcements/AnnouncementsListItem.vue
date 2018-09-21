@@ -3,21 +3,21 @@
 		<div class="pkpListPanelItem__summary -pkpClearfix">
 			<div class="pkpListPanelItem--announcement__mainData">
 				<div class="pkpListPanelItem--announcement__item">
-					{{ item.title }}
+					{{ localize(item.title) }}
 				</div>
 				<div v-if="expired" class="pkpListPanelItem--announcement__activity">
-					<b>Is Expired:</b> {{ item.dateExpiry }}
+					<b>Is Expired:</b> {{ item.dateExpire }}
 				</div>
 				<div v-else="expired" class="pkpListPanelItem--announcement__activity">
-					Will Expire: {{ item.dateExpiry }}
+					Will Expire: {{ item.dateExpire }}
 				</div>
 			</div>
 			<div class="pkpListPanelItem--announcement__publicationDate">
 				<div :aria-labelledby="announcementPublicationDateLabelId" class="pkpListPanelItem--announcement__publicationDateValue">
-					{{ item.datePublished }}
+					{{ item.datePosted }}
 				</div>
 				<div :id="announcementPublicationDateLabelId" class="pkpListPanelItem--announcement__publicationDateLabel">
-					{{ i18n.datePublished }}
+					{{ i18n.datePosted }}
 				</div>
 			</div>
 			<button
