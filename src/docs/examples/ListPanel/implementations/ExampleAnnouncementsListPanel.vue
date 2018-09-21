@@ -42,7 +42,6 @@ export default {
 			],
 			itemsMax: 3,
 			i18n: {
-				id: 'ID',
 				title: 'Announcements',
 				add: 'Add Announcement',
 				search: 'Search',

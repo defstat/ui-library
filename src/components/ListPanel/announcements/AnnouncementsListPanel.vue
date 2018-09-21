@@ -51,12 +51,15 @@ import AnnouncementsListItem from '@/components/ListPanel/announcements/Announce
 
 export default {
 	extends: ListPanel,
-	name: 'Announcements',
+	name: 'AnnouncementsListPanel',
 	components: {
 		ListPanelSearch,
 		ListPanelCount,
 		ListPanelLoadMore,
 		AnnouncementsListItem,
+	},
+	data: function () {
+		return {};
 	},
 };
 </script>
