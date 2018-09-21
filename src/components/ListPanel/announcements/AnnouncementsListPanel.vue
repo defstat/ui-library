@@ -6,6 +6,13 @@
 				<span v-if="isLoading" class="pkpSpinner" aria-hidden="true"></span>
 			</div>
 			<ul class="pkpListPanel__actions">
+				<li>
+					<pkp-button
+						element="a"
+						:href="addUrl"
+						:label="i18n.add"
+					/>
+				</li>
 			</ul>
 			<list-panel-search
 				@searchPhraseChanged="setSearchPhrase"
@@ -48,6 +55,7 @@ import ListPanelSearch from '@/components/ListPanel/ListPanelSearch.vue';
 import ListPanelCount from '@/components/ListPanel/ListPanelCount.vue';
 import ListPanelLoadMore from '@/components/ListPanel/ListPanelLoadMore.vue';
 import AnnouncementsListItem from '@/components/ListPanel/announcements/AnnouncementsListItem.vue';
+import PkpButton from '@/components/Button/Button.vue';
 
 export default {
 	extends: ListPanel,
@@ -57,6 +65,7 @@ export default {
 		ListPanelCount,
 		ListPanelLoadMore,
 		AnnouncementsListItem,
+		PkpButton,
 	},
 };
 </script>
