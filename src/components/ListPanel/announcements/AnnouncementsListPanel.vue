@@ -59,13 +59,16 @@ import PkpButton from '@/components/Button/Button.vue';
 
 export default {
 	extends: ListPanel,
-	name: 'Announcements',
+	name: 'AnnouncementsListPanel',
 	components: {
 		ListPanelSearch,
 		ListPanelCount,
 		ListPanelLoadMore,
 		AnnouncementsListItem,
 		PkpButton,
+	},
+	data: function () {
+		return {};
 	},
 };
 </script>
