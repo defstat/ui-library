@@ -122,9 +122,9 @@ export const useFileManagerStore = defineComponentStore(
 			);
 		}
 
-		function fileSendToEditor() {
+		function fileSendToEditor({file}) {
 			fileManagerActions.fileSendToEditor(
-				enrichActionArgs(),
+				enrichActionArgs({file}),
 				actionFinishCallback,
 			);
 		}

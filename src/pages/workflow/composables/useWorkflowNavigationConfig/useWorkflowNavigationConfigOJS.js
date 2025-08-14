@@ -311,6 +311,7 @@ export function useWorkflowNavigationConfigOJS(pageInitConfig) {
 
 		items.push(
 			getPublicationItem({
+				publicationId,
 				name: 'bodyText',
 				label: t('publication.bodyText'),
 			}),

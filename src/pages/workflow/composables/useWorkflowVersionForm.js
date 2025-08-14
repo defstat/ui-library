@@ -37,17 +37,11 @@ function getRequestPublicationId({
 	return sendToVersion;
 }
 
-/**
- * goToPublicationPage - Navigates to the publication page
- */
-function goToPublicationPage(store, {publicationId}) {
-	store.navigateToMenu(`publication_${publicationId}_titleAbstract`);
-}
-
 export function useWorkflowVersionForm(
 	versionMode = 'createNewVersion',
 	closeDialog = () => {},
 	onSubmitFn = null,
+	submissionFileId = null,
 ) {
 	const store = useWorkflowStore();
 	const {t} = useLocalize();
@@ -62,6 +56,16 @@ export function useWorkflowVersionForm(
 		isTextEditorMode: versionMode === VERSION_MODE.SEND_TO_TEXT_EDITOR,
 		isPublishMode: versionMode === VERSION_MODE.PUBLISH,
 	};
+
+	/**
+	 * goToPublicationPage - Navigates to the publication page
+	 */
+	function goToPublicationPage(store, {publicationId}) {
+		const target = modeState.isTextEditorMode
+			? `publication_${publicationId}_bodyText`
+			: `publication_${publicationId}_titleAbstract`;
+		store.navigateToMenu(target);
+	}
 
 	function redirectToExistingVersion(versionId) {
 		closeDialog(false);
@@ -78,6 +82,19 @@ export function useWorkflowVersionForm(
 			modeState.isCreateMode || formData.sendToVersion === 'create';
 
 		if (!shouldCreateNewVersion && !formData.versionStage) {
+			if (modeState.isTextEditorMode) {
+				const createdEditorFile = await createEditorFile(
+					formData.sendToVersion,
+				);
+
+				if (!createdEditorFile.success) {
+					console.warn(
+						'Editor file could not be created:',
+						createdEditorFile.error,
+					);
+				}
+			}
+
 			// just redirect if no updates are needed for the selected version when sending to text editor
 			return redirectToExistingVersion(formData.sendToVersion);
 		}
@@ -105,6 +122,7 @@ export function useWorkflowVersionForm(
 			body: {
 				versionStage: formData.versionStage,
 				versionIsMinor: formData.versionIsMinor,
+				submissionFileId: submissionFileId,
 			},
 			expectValidationError: true,
 		});
@@ -116,6 +134,18 @@ export function useWorkflowVersionForm(
 			closeDialog(false);
 
 			if (!modeState.isPublishMode) {
+				if (modeState.isTextEditorMode) {
+					const createdEditorFile = await createEditorFile(
+						shouldCreateNewVersion ? publicationData.value?.id : publicationId,
+					);
+
+					if (!createdEditorFile.success) {
+						console.warn(
+							'Editor file could not be created:',
+							createdEditorFile.error,
+						);
+					}
+				}
 				goToPublicationPage(store, {
 					publicationId: shouldCreateNewVersion
 						? publicationData.value?.id
@@ -132,6 +162,45 @@ export function useWorkflowVersionForm(
 		return {
 			data: publicationData.value,
 			validationError: validationError.value,
+		};
+	}
+
+	/**
+	 * Creates a new editor file from the selected submissionFileId and attaches it to the given publication
+	 */
+	async function createEditorFile(publicationId) {
+		if (!submissionFileId) {
+			console.warn(
+				'No submissionFileId was provided. Cannot create editor file.',
+			);
+			return;
+		}
+
+		const {apiUrl: versionUrl} = useUrl(
+			`submissions/${store.submission.id}/publications/${publicationId}/bodyText/${submissionFileId}`,
+		);
+
+		const {fetch, isSuccess, validationError, data} = useFetch(versionUrl, {
+			method: 'POST',
+			expectValidationError: true,
+		});
+
+		await fetch();
+
+		if (!isSuccess.value) {
+			console.error(
+				'Failed to create editor file',
+				validationError.value || data.value,
+			);
+			return {
+				success: false,
+				error: validationError.value || data.value,
+			};
+		}
+
+		return {
+			success: true,
+			data: data.value,
 		};
 	}
 

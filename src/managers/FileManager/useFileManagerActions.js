@@ -19,7 +19,7 @@ export function useFileManagerActions() {
 	const {t, localize} = useLocalize();
 
 	function fileSendToEditor(
-		{fileStage, submission, submissionStageId},
+		{file, submission, submissionStageId},
 		finishedCallback,
 	) {
 		const {openDialog, closeDialog} = useModal();
@@ -29,6 +29,7 @@ export function useFileManagerActions() {
 			bodyComponent: WorkflowVersionDialogBody,
 			bodyProps: {
 				mode: 'sendToTextEditor',
+				submissionFileId: file.id,
 				displayDefaultFooter: false,
 				onCloseFn: () => closeDialog(),
 			},
